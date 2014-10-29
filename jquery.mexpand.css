@@ -1,0 +1,15 @@
+.me-selected{
+  opacity: 0.5;
+}
+
+.me-last{
+  background-color: green;
+}
+
+
+.me-box{
+  border: 2px solid blue;
+  position: relative;
+  float: left;
+  width: 100%;
+}
