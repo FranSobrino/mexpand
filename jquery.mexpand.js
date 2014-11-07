@@ -29,11 +29,11 @@
         return base.$elements.eq(lastRowIndex); 
       }
 
-      function drawBoxAfter(element){
+      function drawBoxAfter(element, content){
         if (element){
           element.addClass('me-last');
           element.after(base.boxWrapper);
-          $('[data-mexpand~=box]', base.container).html(base.options.box)
+          $('[data-mexpand~=box]', base.container).html(content)
           //TODO: Apply effects on append box
         }
       }
@@ -42,7 +42,9 @@
         clean();
         $(element).addClass('me-selected'); 
         var lastRowElement = getLastRowElement($(element));
-        drawBoxAfter(lastRowElement);
+        var content = jQuery.isFunction(base.options.box) ? base.options.box($(element)) : base.options.box;
+
+        drawBoxAfter(lastRowElement, content);
         if (jQuery.isFunction(base.callback))
           base.callback(element, lastRowElement);
       }
@@ -65,7 +67,9 @@
 
   $.mexpand.defaultOptions = {
     element: "div",       //element to expand selector
-    box: "Mexpander: Example text appended on element",  // function or content to apend into element
+    box: function(element){
+     return '<p>' + (element.data('content') ? element.data('content') : 'Default text') + '</p>'
+    },  // function or content to apend into element
     callback: null        //calback(element, lastRowElement)
   };
 
